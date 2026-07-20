@@ -37,15 +37,11 @@ private List<Employee> employees=new ArrayList<>();
 
 	@Override
 	public Optional<Employee> getEmoployeeById(int id) {
-		// TODO Auto-generated method stub
-		for(Employee em:employees) {
-			if(em.getId()==id) {
-				
+	
 				return repo.findById(id);
-			}
+			
 		}
-		return null;
-	}
+	
 	
 	@Override
 	public Employee insertUser(Employee newUser) {		

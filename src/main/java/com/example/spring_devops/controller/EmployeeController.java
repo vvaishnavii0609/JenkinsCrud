@@ -40,15 +40,20 @@ public class EmployeeController {
     	return newUser;
     }
         
-   @GetMapping("/{id}")
-   public ResponseEntity<Optional<Employee>> getUserById(@PathVariable int id) {
-   	Optional<Employee> found_User=this.us.getEmoployeeById(id);
-   	if(found_User!=null) {
-    		return ResponseEntity.ok(found_User);
-  	}
-   	return ResponseEntity.notFound().build();
-}
+    @GetMapping("/{id}")
+    public ResponseEntity<Employee> getUserById(@PathVariable int id) {
+
+        Optional<Employee> found_User = this.us.getEmoployeeById(id);
+
+        if(found_User.isPresent()) {
+            return ResponseEntity.ok(found_User.get());
+        }
+
+        return ResponseEntity.notFound().build();
+    }
     
+    
+   
 
     @DeleteMapping("/{id}")
     public void deletebyId(@PathVariable int id)
