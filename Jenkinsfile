@@ -33,18 +33,28 @@ pipeline {
             }
         }
 
-        stage('Stop Existing Application') {
-            steps {
-                bat '''
-                @echo off
-                for /f "tokens=5" %%a in ('netstat -ano ^| findstr :7373') do (
-                    echo Stopping existing application...
-                    taskkill /PID %%a /F
-                )
-                exit /b 0
-                '''
-            }
-        }
+stage('Stop Existing Application') {
+    steps {
+        bat '''
+        @echo off
+
+        set PID=
+
+        for /f "tokens=5" %%a in ('netstat -ano ^| findstr :9090') do (
+            set PID=%%a
+        )
+
+        if defined PID (
+            echo Stopping application running on port 9090...
+            taskkill /F /PID %PID%
+        ) else (
+            echo No application is running on port 9090.
+        )
+
+        exit /b 0
+        '''
+    }
+}
 
         stage('Deploy Application') {
             steps {
