@@ -20,19 +20,7 @@ pipeline {
                     url: 'https://github.com/vvaishnavii0609/JenkinsCrud.git'
             }
         }
-
-        stage('Compile') {
-            steps {
-                bat 'mvn clean compile'
-            }
-        }
-
-        stage('Package Application') {
-            steps {
-                bat 'mvn package -DskipTests'
-            }
-        }
-
+        
         stage('Stop Existing Application') {
             steps {
                 bat '''
@@ -45,6 +33,19 @@ pipeline {
                 '''
             }
         }
+        stage('Compile') {
+            steps {
+                bat 'mvn clean compile'
+            }
+        }
+
+        stage('Package Application') {
+            steps {
+                bat 'mvn package -DskipTests'
+            }
+        }
+
+
 
         stage('Deploy Application') {
     steps {
